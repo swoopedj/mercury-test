@@ -38,10 +38,12 @@ function appRender(state) {
             type: 'text/css',
             href: '../public/style.css'
         }),
+        h('nav', [
+            h('img.logo', {src: './public/cbanc-logo.jpg'}),
+            h('h1.title', 'Markdown Editor')
+        ]),
+        h('div.subtitle', [h('h2.subtitle-text', 'Side-by-side Markdown Editor')]),
         h('.content', [
-            h('h2', 'Side-by-side Markdown Editor'),
-            h('p', 'Enter some markdown in the left pane and see it rendered ' +
-                'in the pane on the right.'),
             sideBySideMdEditor.render(state.sideBySideEditor)
             // h('h2', 'Inline Markdown Editor'),
             // h('p', 'Enter some markdown and click outside of the textarea to ' +
