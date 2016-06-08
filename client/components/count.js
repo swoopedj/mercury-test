@@ -1,6 +1,6 @@
 'use strict';
 
-var document = require(['global/document']);
+// var document = require(['global/document']);
 var hg = require('../main.js');
 var h = require('../main.js').h;
 

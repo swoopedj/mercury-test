@@ -7,7 +7,10 @@ var app = express();
 // Serve a browserified file for GET /scripts/app-bundle.js
 //
 app.get('/scripts/app-bundle.js',
-  browserify(['./client/main.js', './client/components/count.js']));
+  browserify('./client/markdown/browser.js'));
+
+// app.get('/scripts/count.js', 
+//   browserify('./client/components/count.js'));
 
 //
 // Non-js static files
