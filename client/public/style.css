@@ -1,8 +1,12 @@
+@font-face {
+  font-family: "Open Sans";
+  src: url(OpenSans-Light-webfont.ttf);
+}
 html {
   font-family: Helvetica, Arial, sans-serif;
 }
 body {
-  background: #f4f4f4;
+  background: #FFFFFF;
   color: #333;
   font-size: 0.8125rem;
   line-height: 1rem;
@@ -25,11 +29,20 @@ body,
 /*.page {
   visibility: visible !important;
 }*/
-.container {
-  height: 100%;
-  margin: 0 40px;
-  overflow: auto;
+.content {
+  margin: 0;
 }
+
+nav {
+  background-color: #3C9DE5;
+  width: 100%;
+  height: 60px;
+  position: relative;
+  text-align: center;
+  overflow: auto;
+  margin-bottom: 0;
+}
+
 h1,
 h2,
 h3,
@@ -56,6 +69,37 @@ h5,
 h6 {
   font-size: 0.875rem;
 }
+
+h1.title {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #FFFFFF;
+  font-weight: 300;
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 0;
+}
+
+img.logo {
+  width: 15%;
+  position: absolute;
+  left: 0;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  background-color: #F2F2F2;
+  height: 40px;
+  margin-top: auto;
+  padding-top: 12px;
+  padding-left: 5px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h2.subtitle-text {
+  color: #3C9DE5;
+  margin-top: 0;
+}
+
 a {
   color: #007aff;
   text-decoration: none;
@@ -88,10 +132,12 @@ blockquote:after {
   content: '”';
 }
 .textarea {
-  background: #fff;
+  background: transparent;
   border: 1px solid #ccc;
+  border: none;
   min-height: 3em;
   position: relative;
+  margin-right: 10px;
 }
 .textarea > textarea,
 .textarea > pre {
@@ -117,14 +163,17 @@ blockquote:after {
   cursor: pointer;
 }
 .sideBySideMdEditor {
-  height: 20rem;
+  height: 30rem;
   overflow: hidden;
+  padding: 5px 5px 15px 5px;
 }
 .sideBySideMdEditor > div {
   float: left;
   height: 100%;
-  width: 50%;
+  width: 48%;
 }
 .markdown {
+  border: 0.5px solid #ccc;
+  box-shadow: -10px 10px 10px #888888;
   overflow: auto;
 }

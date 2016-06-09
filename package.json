@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +19,8 @@
     "express": "^4.13.0",
     "marked": "^0.3.5",
     "mercury": "^14.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
   }
 }
