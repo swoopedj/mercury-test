@@ -31,7 +31,6 @@ body,
 }*/
 .content {
   margin: 0;
-  padding-right: 5px;
 }
 
 nav {
@@ -166,7 +165,7 @@ blockquote:after {
 .sideBySideMdEditor {
   height: 30rem;
   overflow: hidden;
-  padding: 5px;
+  padding: 5px 5px 15px 5px;
 }
 .sideBySideMdEditor > div {
   float: left;

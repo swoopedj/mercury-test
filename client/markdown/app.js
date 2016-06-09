@@ -2,7 +2,7 @@
 
 var mercury = require('../main.js');
 var h = mercury.h;
-var inlineMdEditor = require('./component/inlineMdEditor');
+// var inlineMdEditor = require('./component/inlineMdEditor');
 var sideBySideMdEditor = require('./component/sideBySideMdEditor');
 
 app.render = appRender;
@@ -11,17 +11,17 @@ module.exports = app;
 
 function app() {
     var state = mercury.struct({
-        inlineEditor: inlineMdEditor({
-            placeholder: 'Enter some markdown...'
-        }),
+        // inlineEditor: inlineMdEditor({
+        //     placeholder: 'Enter some markdown...'
+        // }),
         sideBySideEditor: sideBySideMdEditor({
             placeholder: 'Enter some markdown...',
             value: [
-                '#Hello World',
+                '<h2>Hello World</h2>',
                 '',
-                '* sample',
-                '* bullet',
-                '* points'
+                '* markdown',
+                '* goes',
+                '* here'
             ].join('\n')
         })
     });
@@ -42,7 +42,7 @@ function appRender(state) {
             h('img.logo', {src: './public/cbanc-logo.jpg'}),
             h('h1.title', 'Markdown Editor')
         ]),
-        h('div.subtitle', [h('h2.subtitle-text', 'Side-by-side Markdown Editor')]),
+        h('div.subtitle', [h('h2.subtitle-text', 'Enter your markdown:')]),
         h('.content', [
             sideBySideMdEditor.render(state.sideBySideEditor)
             // h('h2', 'Inline Markdown Editor'),
