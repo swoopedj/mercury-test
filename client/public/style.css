@@ -42,6 +42,9 @@ nav {
   overflow: auto;
   margin-bottom: 0;
 }
+/*input[type=button] {
+  background-color: #3C9DE5;
+}*/
 
 h1,
 h2,
@@ -88,11 +91,26 @@ img.logo {
 
 .subtitle {
   background-color: #F2F2F2;
-  height: 40px;
+  height: 55px;
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 5px;
   padding-left: 5px;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.input-label {
+  float: left;
+  font-size: 0.7rem;
+}
+
+.document-name {
+  background: transparent;
+  border: none;
+  line-height: 25px;
+  font-size: 1.75em;
+  color: #3C9DE5;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  float: left;
 }
 
 h2.subtitle-text {

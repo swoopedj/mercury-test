@@ -2,7 +2,7 @@
 
 var mercury = require('../main.js');
 var h = mercury.h;
-// var inlineMdEditor = require('./component/inlineMdEditor');
+var fileSaveInput = require('./component/fileSaveInput');
 var sideBySideMdEditor = require('./component/sideBySideMdEditor');
 
 app.render = appRender;
@@ -11,9 +11,6 @@ module.exports = app;
 
 function app() {
     var state = mercury.struct({
-        // inlineEditor: inlineMdEditor({
-        //     placeholder: 'Enter some markdown...'
-        // }),
         sideBySideEditor: sideBySideMdEditor({
             placeholder: 'Enter some markdown...',
             value: [
@@ -23,10 +20,20 @@ function app() {
                 '* goes',
                 '* here'
             ].join('\n')
+        }),
+        fileSaveInput: fileSaveInput({
+            value: 'Sample.md'
         })
     });
 
     return state;
+}
+
+function embolden(opts){
+    console.log(opts);
+    var opts  = opts || '';
+    return '<strong>'+ opts + '</strong>'
+    
 }
 
 function appRender(state) {
@@ -42,13 +49,23 @@ function appRender(state) {
             h('img.logo', {src: './public/cbanc-logo.jpg'}),
             h('h1.title', 'Markdown Editor')
         ]),
-        h('div.subtitle', [h('h2.subtitle-text', 'Enter your markdown:')]),
+        h('div.subtitle', [
+            h('label.input-label', 'DOCUMENT NAME'),
+            h('br'),
+            h('input.document-name', [
+                fileSaveInput.render(state.fileSaveInput)
+            ])
+        ]),
         h('.content', [
             sideBySideMdEditor.render(state.sideBySideEditor)
-            // h('h2', 'Inline Markdown Editor'),
-            // h('p', 'Enter some markdown and click outside of the textarea to ' +
-            //     'see the parsed result. Click the output to edit again.'),
-            // inlineMdEditor.render(state.inlineEditor)
-        ])
+        ]),
+        h('input', {
+            type: 'button',
+            value: "Bold",
+            'ev-click': function(){
+                // var sel = window.getSelection()
+                console.log(state.selectedText);
+            }
+        })
     ]);
 }

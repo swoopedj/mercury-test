@@ -47,7 +47,34 @@ function textareaRender(state) {
     var events = state.events;
 
     return h('.textarea', [
-        h('textarea.expanding', {
+        h('textarea#expanding', {
+            'onblur': function(){
+                 var textComponent = document.getElementById('expanding');
+
+                  var selectedText;
+                  // IE version
+                  if (document.selection != undefined)
+                  {
+                    textComponent.focus();
+                    var sel = document.selection.createRange();
+                    state.selectedText = mercury.value(sel.text);
+                    
+
+                  }
+                  // Mozilla version
+                  else if (textComponent.selectionStart != undefined)
+                  {
+                    var startPos = textComponent.selectionStart;
+                    var endPos = textComponent.selectionEnd;
+                    state.selectedText = 
+                    mercury.value(textComponent.value.substring(startPos, endPos))
+
+                  }
+                  // console.log(state.selectedText)
+                  // return state.selectedText
+                    // alert("You selected: " + selectedText);
+
+            },
             'ev-blur': mercury.event(events.blur, state.value),
             'ev-change': events.change,
             'ev-input': events.input,

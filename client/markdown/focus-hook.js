@@ -1,7 +1,7 @@
 'use strict';
 
-var document = require('global/document');
-var nextTick = require('next-tick');
+// var document = require('global/document');
+// var nextTick = require('next-tick');
 
 module.exports = MutableFocusHook;
 
@@ -11,10 +11,13 @@ function MutableFocusHook() {
     }
 }
 
-MutableFocusHook.prototype.hook = function hook(node, property) {
-    nextTick(function onTick() {
-        if (document.activeElement !== node) {
-            node.focus();
-        }
-    });
-};
+// MutableFocusHook.prototype.hook = function hook(node, property) {
+//     nextTick(function onTick() {
+//         if (document.activeElement !== node) {
+//             // node.focus();
+//             var sel = window.getSelection();
+//             console.log('Inside MutableFocusHook: ', sel)
+//             return sel;
+//         }
+//     });
+// };
