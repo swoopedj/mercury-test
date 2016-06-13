@@ -11,6 +11,7 @@ module.exports = mdRender;
 
 function mdRender(options) {
     // var events = input();
+    // console.log('MD RENDER options: ', options)
     var state = mercury.struct({
         // events: events,
         value: mercury.value(options.value || '')
@@ -24,6 +25,7 @@ function mdRender(options) {
 // }
 
 function mdRenderRender(state) {
+    console.log('mdRENDERrender state: ', state)
     var events = state.events;
 
     return h('.markdown', {

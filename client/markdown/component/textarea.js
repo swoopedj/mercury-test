@@ -2,6 +2,7 @@
 
 var mercury = require('../../main.js');
 var h = mercury.h;
+// var $ = require('jquery');
 var doMutableFocus = require('../focus-hook.js');
 var update = {
     // this needs to be input rather than change so that the pre expands as text
@@ -23,6 +24,7 @@ module.exports = textarea;
 
 function textarea(options) {
     options = options || {};
+    console.log('In TEXTAREA: ', options.value)
 
     var events = input();
     var state = mercury.struct({
@@ -30,7 +32,7 @@ function textarea(options) {
         value: mercury.value(options.value || ''),
         placeholder: mercury.value(options.placeholder || ''),
         title: mercury.value(options.title || ''),
-        shouldFocus: options.shouldFocus
+        shouldFocus: options.shouldFocus,
     });
 
     events.input(update.input.bind(null, state));
@@ -45,11 +47,14 @@ function input() {
 
 function textareaRender(state) {
     var events = state.events;
+    //console shows state.value to have bold properties after click
+    console.log('In TARENDER: ', state.value)
 
     return h('.textarea', [
         h('textarea#expanding', {
             'onblur': function(){
                  var textComponent = document.getElementById('expanding');
+                 var textContent = document.getElementById('expanding').value;
 
                   var selectedText;
                   // IE version
@@ -57,8 +62,7 @@ function textareaRender(state) {
                   {
                     textComponent.focus();
                     var sel = document.selection.createRange();
-                    state.selectedText = mercury.value(sel.text);
-                    
+                    // state.selectedText = mercury.value(sel.text);
 
                   }
                   // Mozilla version
@@ -66,13 +70,12 @@ function textareaRender(state) {
                   {
                     var startPos = textComponent.selectionStart;
                     var endPos = textComponent.selectionEnd;
-                    state.selectedText = 
-                    mercury.value(textComponent.value.substring(startPos, endPos))
 
                   }
-                  // console.log(state.selectedText)
-                  // return state.selectedText
-                    // alert("You selected: " + selectedText);
+                  var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
+                    textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
+                  
+                  state.boldValue = newContent;
 
             },
             'ev-blur': mercury.event(events.blur, state.value),
@@ -81,7 +84,8 @@ function textareaRender(state) {
             'ev-focus': state.shouldFocus ? doMutableFocus() : null,
             name: state.title,
             placeholder: state.placeholder,
-            value: state.value
+            value: state.value,
+            boldValue: state.boldValue
         }),
         h('pre', [
             h('span', state.value),
