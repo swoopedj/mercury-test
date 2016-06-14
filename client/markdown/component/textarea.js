@@ -13,6 +13,14 @@ var update = {
     change: function change(state, e) {
         // trim the content on a change event
         state.value.set(e.target.value.trim());
+    },
+    bold: function bold(state, e){
+        console.log('BOLD HIT')
+        // state.value.set(e.target.boldValue)
+    },
+    embolden: function embolden(state, e){
+        console.log('e, newContent: ', e)
+        // state.boldValue.set(e.target.newContent)
     }
 };
 
@@ -24,7 +32,7 @@ module.exports = textarea;
 
 function textarea(options) {
     options = options || {};
-    console.log('In TEXTAREA: ', options.value)
+    console.log('textarea, options: ', options)
 
     var events = input();
     var state = mercury.struct({
@@ -33,22 +41,26 @@ function textarea(options) {
         placeholder: mercury.value(options.placeholder || ''),
         title: mercury.value(options.title || ''),
         shouldFocus: options.shouldFocus,
+        boldValue: mercury.value(options.boldValue || '')
     });
 
     events.input(update.input.bind(null, state));
     events.change(update.change.bind(null, state));
+    //
+    events.blur(update.embolden.bind(null, state))
+    events.click(update.bold.bind(null, state))
 
     return state;
 }
 
 function input() {
-    return mercury.input([ 'blur', 'change', 'input' ]);
+    return mercury.input([ 'blur', 'change', 'input', 'click' ]);
 }
 
 function textareaRender(state) {
     var events = state.events;
     //console shows state.value to have bold properties after click
-    console.log('In TARENDER: ', state.value)
+    console.log('textareaRender, state: ', state)
 
     return h('.textarea', [
         h('textarea#expanding', {
@@ -75,10 +87,11 @@ function textareaRender(state) {
                   var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
                     textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
                   
-                  state.boldValue = newContent;
+                  // state.boldValue.set('some shit');
+                  state.boldValue = 'some shit';
 
             },
-            'ev-blur': mercury.event(events.blur, state.value),
+            'ev-blur': events.blur,
             'ev-change': events.change,
             'ev-input': events.input,
             'ev-focus': state.shouldFocus ? doMutableFocus() : null,
