@@ -25,7 +25,7 @@ function mdRender(options) {
 // }
 
 function mdRenderRender(state) {
-    console.log('mdRENDERrender state: ', state)
+    // console.log('mdRENDERrender state: ', state)
     var events = state.events;
 
     return h('.markdown', {

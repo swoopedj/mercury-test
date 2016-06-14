@@ -72,6 +72,7 @@ var mercury = module.exports = {
 };
 
 function input(names) {
+    console.log('Input names: ', names)
     if (!names) {
         return SingleEvent();
     }
@@ -80,35 +81,35 @@ function input(names) {
 }
 
 function state(obj) {
-    var copy = extend(obj);
-    var $channels = copy.channels;
-    var $handles = copy.handles;
+    // var copy = extend(obj);
+    // var $channels = copy.channels;
+    // var $handles = copy.handles;
 
-    if ($channels) {
-        copy.channels = mercury.value(null);
-    } else if ($handles) {
-        copy.handles = mercury.value(null);
-    }
+    // if ($channels) {
+    //     copy.channels = mercury.value(null);
+    // } else if ($handles) {
+    //     copy.handles = mercury.value(null);
+    // }
 
-    var observ = mercury.struct(copy);
-    if ($channels) {
-        observ.channels.set(mercury.channels($channels, observ));
-    } else if ($handles) {
-        observ.handles.set(mercury.channels($handles, observ));
-    }
-    return observ;
+    // var observ = mercury.struct(copy);
+    // if ($channels) {
+    //     observ.channels.set(mercury.channels($channels, observ));
+    // } else if ($handles) {
+    //     observ.handles.set(mercury.channels($handles, observ));
+    // }
+    // return observ;
 }
 
 function channels(funcs, context) {
-    return Object.keys(funcs).reduce(createHandle, {});
+    // return Object.keys(funcs).reduce(createHandle, {});
 
-    function createHandle(acc, name) {
-        var handle = mercury.Delegator.allocateHandle(
-            funcs[name].bind(null, context));
+    // function createHandle(acc, name) {
+    //     var handle = mercury.Delegator.allocateHandle(
+    //         funcs[name].bind(null, context));
 
-        acc[name] = handle;
-        return acc;
-    }
+    //     acc[name] = handle;
+    //     return acc;
+    // }
 }
 
 function app(elem, observ, render, opts) {

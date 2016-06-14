@@ -11,9 +11,16 @@ var update = {
         state.value.set(e.target.value);
     },
     change: function change(state, e) {
+        console.log('Change state: ', state)
+        // console.log('Change e.target.boldValue: ', e.target.boldValue)
+        //state.value.set(e.target.boldValue);
+
         // trim the content on a change event
         state.value.set(e.target.value.trim());
     }
+    // bold: function embolden(state, e) {
+    //     state.value.set()
+    // }
 };
 
 textarea.render = textareaRender;
@@ -24,7 +31,8 @@ module.exports = textarea;
 
 function textarea(options) {
     options = options || {};
-    console.log('In TEXTAREA: ', options.value)
+    //console shows options.value to have bold properties after click
+    console.log('In TEXTAREA: options.boldValues =  ', options.boldValues)
 
     var events = input();
     var state = mercury.struct({
@@ -33,26 +41,30 @@ function textarea(options) {
         placeholder: mercury.value(options.placeholder || ''),
         title: mercury.value(options.title || ''),
         shouldFocus: options.shouldFocus,
+        boldValues: mercury.value(options.boldValues || '')
     });
 
     events.input(update.input.bind(null, state));
     events.change(update.change.bind(null, state));
 
+    // state is a function
+    // console.log("TA STATE: ", state)
+
     return state;
 }
 
 function input() {
-    return mercury.input([ 'blur', 'change', 'input' ]);
+    return mercury.input([ 'blur', 'change', 'input', 'click' ]);
 }
 
 function textareaRender(state) {
     var events = state.events;
-    //console shows state.value to have bold properties after click
-    console.log('In TARENDER: ', state.value)
+    console.log('In TARENDER: ', state)
 
     return h('.textarea', [
         h('textarea#expanding', {
             'onblur': function(){
+                // state.boldValue = null;
                  var textComponent = document.getElementById('expanding');
                  var textContent = document.getElementById('expanding').value;
 
@@ -72,10 +84,19 @@ function textareaRender(state) {
                     var endPos = textComponent.selectionEnd;
 
                   }
-                  var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
-                    textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
+                  // var newContent = textContent.substring(0, startPos - 1) + '<strong>' + '\n' +
+                  //   textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
                   
-                  state.boldValue = newContent;
+                  //This is what I want to do:
+                  // state.boldValue.set(newContent);
+                  //not this:
+                  state.boldValues = {
+                    begin: startPos,
+                    end: endPos
+                  }
+                  // or:
+                  //add click to events, but only emit on Bold button click
+                  //
 
             },
             'ev-blur': mercury.event(events.blur, state.value),
@@ -85,7 +106,7 @@ function textareaRender(state) {
             name: state.title,
             placeholder: state.placeholder,
             value: state.value,
-            boldValue: state.boldValue
+            boldValues: state.boldValues
         }),
         h('pre', [
             h('span', state.value),

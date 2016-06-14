@@ -17,6 +17,20 @@ module.exports = app;
 
 var textComponent = document.getElementById('expanding');
 
+var update = {
+    // this needs to be input rather than change so that the pre expands as text
+    // is entered into the textarea
+    embolden: function embolden(state, e) {
+        console.log('E in embolden-CLICK: ', e);
+        // state.value.set(e.target.value);
+    }
+}
+
+function input() {
+    // Only need click here? Can take it out of textarea input?
+    return mercury.input([ 'click' ]);
+}
+
 function app() {
     var state = mercury.struct({
         sideBySideEditor: sideBySideMdEditor({
@@ -31,7 +45,7 @@ function app() {
             boldValue: null
         }),
         channels: {
-            // embolden: embolden;
+            embolden: embolden
         },
         fileSaveInput: fileSaveInput({
             value: 'Sample.md'
@@ -41,12 +55,34 @@ function app() {
     return state;
 }
 
-function embolden(opts){
-    console.log(opts);
-    var opts  = opts || '';
-    return '<strong>'+ opts + '</strong>'
+function embolden(state){
+    console.log('State in embolden: ', state);
+    var events = input();
+    var begin = state.sideBySideEditor.editor.boldValues.begin;
+    var end = state.sideBySideEditor.editor.boldValues.end;
+    var textContent = state.sideBySideEditor.editor.value;
+    var newText = textContent.substring(0, begin - 1) + '<strong>' +
+                    textContent.substring(begin, end) + '</strong>' + textContent.substring(end);
+
+    events.click(update.embolden.bind(null, state));
+    // if(state.sideBySideEditor.editor.boldValues){
+    //     var temp = state.sideBySideEditor.editor.value
+    //     // state.sideBySideEditor.editor.value = state.sideBySideEditor.editor.boldValue;
+    //     // state.sideBySideEditor.renderer.value = state.sideBySideEditor.editor.boldValue;
+
+    //     var newState = extend(state.sideBySideEditor, {value: state.sideBySideEditor.editor.boldValue})
+    //     sideBySideMdEditor(newState)
+    //     sideBySideMdEditor.render(newState)
+    // }
+    // else if(!state.sideBySideEditor.editor.boldValue && temp){
+    //     state.sideBySideEditor.editor.value = temp;
+    //     temp = null;
+    // }
+
     
-}
+    
+
+    }
 
 function appRender(state) {
     return h('.page', {
@@ -76,29 +112,9 @@ function appRender(state) {
         h('input', {
             type: 'button',
             value: "Bold",
-            'ev-click': function embolden(){
-                console.log('STATE: ', state)
-                // console.log('REGULAR: ', state.sideBySideEditor.editor.value)
-                // console.log('BOLD: ',state.sideBySideEditor.editor.boldValue)
-                // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-                // state.value.set(state.boldValue);
-                if(state.sideBySideEditor.editor.boldValue){
-                    var temp = state.sideBySideEditor.editor.value
-                    state.sideBySideEditor.editor.value = state.sideBySideEditor.editor.boldValue;
-                    state.sideBySideEditor.renderer.value = state.sideBySideEditor.editor.boldValue;
-                    // sideBySideMdEditor.render(state.sideBySideEditor)
-                    // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-                    var newState = extend(state.sideBySideEditor, {value: state.sideBySideEditor.editor.boldValue})
-                    sideBySideMdEditor(newState)
-                    sideBySideMdEditor.render(newState)
-                }
-                else if(!state.sideBySideEditor.editor.boldValue && temp){
-                    state.sideBySideEditor.editor.value = temp;
-                    temp = null;
-                }
-                
-                state.sideBySideEditor.editor.boldValue = null;
-
+            'ev-click': function(){
+                console.log('State in ev-click: ', state)
+                embolden(state)
             }
         })
     ]);
