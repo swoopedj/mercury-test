@@ -4,7 +4,7 @@ var mercury = require('../main.js');
 var $ = require('jquery');
 var h = mercury.h;
 var extend = require('xtend');
-var fileSaveInput = require('./component/fileSaveInput');
+// var fileSaveInput = require('./component/fileSaveInput');
 var sideBySideMdEditor = require('./component/sideBySideMdEditor');
 //
 var textArea = require('./component/textarea')
@@ -31,9 +31,6 @@ function app() {
         channels: {
             // embolden: embolden;
         },
-        fileSaveInput: fileSaveInput({
-            value: 'Sample.md'
-        })
     });
 
     return state;
@@ -42,6 +39,7 @@ function app() {
 
 function appRender(state) {
     console.log('appRender, state: ', state)
+    var events = state.sideBySideEditor.editor.events;
     return h('.page', {
         style: { visibility: 'visible' }
         
@@ -59,8 +57,15 @@ function appRender(state) {
         h('div.subtitle', [
             h('label.input-label', 'DOCUMENT NAME'),
             h('br'),
-            h('input.document-name', [
-                fileSaveInput.render(state.fileSaveInput)
+            h('form', [
+                h('input.document-name', {
+                    placeholder: 'File_name.md'
+                // [fileSaveInput.render(state.fileSaveInput)]
+                }),
+                h('input.download', {
+                    type: 'image',
+                    src: './public/Download-512.png'
+                })
             ])
         ]),
         h('.content', [
@@ -69,7 +74,7 @@ function appRender(state) {
         h('input', {
             type: 'button',
             value: "Bold",
-            'ev-click': textArea.update.bold
+            'ev-click': events.click
             // function embolden(){
             //     console.log('STATE: ', state)
             //     // console.log('REGULAR: ', state.sideBySideEditor.editor.value)

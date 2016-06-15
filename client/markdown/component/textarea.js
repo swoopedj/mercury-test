@@ -14,13 +14,16 @@ var update = {
         // trim the content on a change event
         state.value.set(e.target.value.trim());
     },
-    bold: function bold(state, e){
-        console.log('BOLD HIT')
-        // state.value.set(e.target.boldValue)
-    },
     embolden: function embolden(state, e){
-        console.log('e, newContent: ', e)
-        // state.boldValue.set(e.target.newContent)
+        //boldValue present on e
+        console.log('embolden, e: ', e)
+        // console.log('embolden, state: ', state)
+        state.boldValue.set(e.target.boldValue)
+    },
+    bold: function bold(state, e){
+        console.log('BOLD HIT, e: ', e)
+        console.log('BOLD , state: ', state)
+        // state.value.set(e.target.boldValue)
     }
 };
 
@@ -32,7 +35,7 @@ module.exports = textarea;
 
 function textarea(options) {
     options = options || {};
-    console.log('textarea, options: ', options)
+    // console.log('textarea, options: ', options)
 
     var events = input();
     var state = mercury.struct({
@@ -60,7 +63,7 @@ function input() {
 function textareaRender(state) {
     var events = state.events;
     //console shows state.value to have bold properties after click
-    console.log('textareaRender, state: ', state)
+    // console.log('textareaRender, state: ', state)
 
     return h('.textarea', [
         h('textarea#expanding', {
@@ -84,16 +87,22 @@ function textareaRender(state) {
                     var endPos = textComponent.selectionEnd;
 
                   }
-                  var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
-                    textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
+                  //maybe use state.value here instead of textContent
+                  var newContent = state.value.substring(0, startPos - 1) + '<strong>' +
+                    state.value.substring(startPos, endPos + 1) + '</strong>' + state.value.substring(endPos);
+                  
+                  //
+                  // var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
+                  //   textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
                   
                   // state.boldValue.set('some shit');
-                  state.boldValue = 'some shit';
+                  state.boldValue = newContent;
 
             },
             'ev-blur': events.blur,
             'ev-change': events.change,
             'ev-input': events.input,
+            // 'ev-click': events.click,
             'ev-focus': state.shouldFocus ? doMutableFocus() : null,
             name: state.title,
             placeholder: state.placeholder,

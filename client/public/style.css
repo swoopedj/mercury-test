@@ -113,6 +113,12 @@ img.logo {
   float: left;
 }
 
+input.download {
+  width: 25px;
+  margin-left: 10px;
+  color: #3C9DE5;;
+}
+
 h2.subtitle-text {
   color: #3C9DE5;
   margin-top: 0;

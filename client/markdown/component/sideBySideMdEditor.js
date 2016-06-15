@@ -14,7 +14,7 @@ function sideBySideMdEditor(options) {
     options = options || {};
 
     var editor = textarea({
-        value: options.boldValue || options.value,
+        value: options.value,
         placeholder: options.placeholder,
         title: options.title,
         boldValue: options.boldValue
