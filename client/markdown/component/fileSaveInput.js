@@ -8,10 +8,11 @@ fileSaveInput.render = fileSaveInputRender;
 module.exports = fileSaveInput;
 
 function fileSaveInput(options) {
+  console.log('fileSaveInput, options: ', options)
   options = options || {}
 
   var state = mercury.struct({
-    input: mercury.value(options.value.set)
+    input: mercury.value(options.value)
   })
 
 
@@ -19,5 +20,8 @@ function fileSaveInput(options) {
 }
 
 function fileSaveInputRender(state){
-  return h('.fileSaveInput', state.input)
+  console.log('fileSaveInputRender, state: ', state)
+  return h('.fileSaveInput', {
+    value: state.input
+  })
 }
