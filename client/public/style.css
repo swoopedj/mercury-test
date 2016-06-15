@@ -116,7 +116,7 @@ img.logo {
 input.download {
   width: 25px;
   margin-left: 10px;
-  color: #3C9DE5;;
+  color: #3C9DE5;
 }
 
 h2.subtitle-text {
@@ -155,15 +155,13 @@ blockquote:before {
 blockquote:after {
   content: '”';
 }
-/*.textareaWrapper {
-  position: relative;
-}
 
-input.bold {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}*/
+input.bold-button {
+margin-left: 10px;
+border-radius: 5px;
+font-weight: bold;
+background-color: #F2F2F2;
+}
 
 .textarea {
   background: transparent;

@@ -91,7 +91,10 @@ function textareaRender(state) {
                         newContent = state.value.substring(0, startPos - 1) + '\n <strong> \n' +
                           state.value.substring(startPos, endPos) + '</strong>' + state.value.substring(endPos);
                       }
-                      //else if start is ' '
+                      else if(state.value[startPos] === ' '){
+                        newContent = state.value.substring(0, startPos + 1) + '<strong>' +
+                          state.value.substring(startPos, endPos) + '</strong>' + state.value.substring(endPos);
+                      }
 
                       else {
                         newContent = state.value.substring(0, startPos) + '<strong>' +

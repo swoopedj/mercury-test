@@ -5,32 +5,24 @@ var h = mercury.h;
 var parseMarkdown = require('marked/lib/marked');
 
 mdRender.render = mdRenderRender;
-// mdRender.input = input;
 
 module.exports = mdRender;
 
 function mdRender(options) {
-    // var events = input();
     // console.log('mdRender, options: ', options)
     var state = mercury.struct({
-        // events: events,
         value: mercury.value(options.value || '')
     });
 
     return state;
 }
 
-// function input() {
-//     return mercury.input([ 'click' ]);
-// }
 
 function mdRenderRender(state) {
     // console.log('mdRenderRender, state: ', state)
     var events = state.events;
 
-    return h('.markdown', {
-        'ev-click': ''  //events.click
-    }, [
+    return h('.markdown', [
         // using a nested node due to a bug with innerHTML in vtree
         h('', { innerHTML: parseMarkdown(state.value) })
     ]);

@@ -4,16 +4,20 @@ var mercury = require('../main.js');
 var $ = require('jquery');
 var h = mercury.h;
 var extend = require('xtend');
-// var fileSaveInput = require('./component/fileSaveInput');
+var saveFileAs = require('file-saver').saveAs;
 var sideBySideMdEditor = require('./component/sideBySideMdEditor');
-//
 var textArea = require('./component/textarea')
 
 app.render = appRender;
 
 module.exports = app;
 
-var textComponent = document.getElementById('expanding');
+function fileSaveAs (value, name){
+  var name = name || 'File_name.md'
+  var file = new File([value], name, {type: 'text/plain;charset=utf-8'});
+  console.log('file: ', file)
+  saveFileAs(file);
+}
 
 function app() {
     var state = mercury.struct({
@@ -30,7 +34,6 @@ function app() {
             previousValue: null
         }),
         channels: {
-            // embolden: embolden;
         },
     });
 
@@ -39,7 +42,7 @@ function app() {
 
 
 function appRender(state) {
-    // console.log('appRender, state: ', state)
+    console.log('appRender, state: ', state)
     var events = state.sideBySideEditor.editor.events;
     return h('.page', {
         style: { visibility: 'visible' }
@@ -60,19 +63,23 @@ function appRender(state) {
             h('br'),
             h('form', [
                 h('input.document-name', {
+                    id: 'file-name',
                     placeholder: 'File_name.md'
-                // [fileSaveInput.render(state.fileSaveInput)]
                 }),
                 h('input.download', {
                     type: 'image',
-                    src: './public/Download-512.png'
+                    src: './public/Download-512.png',
+                    'ev-click': function(){
+                        var fileName = document.getElementById('file-name').value
+                        fileSaveAs(state.sideBySideEditor.editor.value, fileName);
+                    }
                 })
             ])
         ]),
         h('.content', [
             sideBySideMdEditor.render(state.sideBySideEditor)
         ]),
-        h('input', {
+        h('input.bold-button', {
             type: 'button',
             value: "Bold",
             'ev-click': function embolden(){
@@ -91,9 +98,6 @@ function appRender(state) {
                     events.click(boldValue);
                     events.cache(value);
                 }
-                
-                // document.getElementById('#expanding').focus()
-                // state.sideBySideEditor.editor.boldValue = null;
 
             }
         })
