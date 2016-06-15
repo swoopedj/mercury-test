@@ -26,7 +26,8 @@ function app() {
                 '* goes',
                 '* here'
             ].join('\n'),
-            boldValue: null
+            boldValue: null,
+            previousValue: null
         }),
         channels: {
             // embolden: embolden;
@@ -38,7 +39,7 @@ function app() {
 
 
 function appRender(state) {
-    console.log('appRender, state: ', state)
+    // console.log('appRender, state: ', state)
     var events = state.sideBySideEditor.editor.events;
     return h('.page', {
         style: { visibility: 'visible' }
@@ -75,27 +76,23 @@ function appRender(state) {
             type: 'button',
             value: "Bold",
             'ev-click': function embolden(){
-                // console.log('STATE: ', state)
+                console.log('STATE: ', state)
 
                 var boldValue = state.sideBySideEditor.editor.boldValue;
-                // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-                // state.value.set(state.boldValue);
-                // if(state.sideBySideEditor.editor.boldValue){
-                //     var temp = state.sideBySideEditor.editor.value
-                //     state.sideBySideEditor.editor.value = state.sideBySideEditor.editor.boldValue;
-                //     state.sideBySideEditor.renderer.value = state.sideBySideEditor.editor.boldValue;
-                //     // sideBySideMdEditor.render(state.sideBySideEditor)
-                //     // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-                //     var newState = extend(state.sideBySideEditor, {value: state.sideBySideEditor.editor.boldValue})
-                //     sideBySideMdEditor(newState)
-                //     sideBySideMdEditor.render(newState)
-                // }
-                // else if(!state.sideBySideEditor.editor.boldValue && temp){
-                //     state.sideBySideEditor.editor.value = temp;
-                //     temp = null;
-                // }
-                events.click(boldValue)
-                document.getElementById('#expanding').focus()
+                var value = state.sideBySideEditor.editor.value;
+                var preValue = state.sideBySideEditor.editor.previousValue;
+
+                if (boldValue === value && preValue !== ''){
+                    console.log('SAME! preValue assigned')
+                    events.click(preValue);
+                }
+                else if(boldValue !== ''){
+                    console.log('boldValue assigned')
+                    events.click(boldValue);
+                    events.cache(value);
+                }
+                
+                // document.getElementById('#expanding').focus()
                 // state.sideBySideEditor.editor.boldValue = null;
 
             }

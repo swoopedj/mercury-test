@@ -17,7 +17,8 @@ function sideBySideMdEditor(options) {
         value: options.value,
         placeholder: options.placeholder,
         title: options.title,
-        boldValue: options.boldValue
+        boldValue: options.boldValue,
+        previousValue: options.previousValue
     });
     var renderer = mdRender({ value: options.value });
     var state = mercury.struct({
