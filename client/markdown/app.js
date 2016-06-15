@@ -70,11 +70,11 @@ function appRender(state) {
         ]),
         h('.content', [
             sideBySideMdEditor.render(state.sideBySideEditor)
-        ]),
-        h('input', {
-            type: 'button',
-            value: "Bold",
-            'ev-click': events.click
+        ])
+        // h('input', {
+        //     type: 'button',
+        //     value: "Bold",
+        //     'ev-click': events.click
             // function embolden(){
             //     console.log('STATE: ', state)
             //     // console.log('REGULAR: ', state.sideBySideEditor.editor.value)
@@ -99,6 +99,6 @@ function appRender(state) {
             //     state.sideBySideEditor.editor.boldValue = null;
 
             // }
-        })
+        // })
     ]);
 }
