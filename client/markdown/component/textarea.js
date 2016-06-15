@@ -19,12 +19,12 @@ var update = {
         console.log('embolden, e: ', e)
         // console.log('embolden, pre-state: ', state.boldValue)
         state.boldValue.set(e)
-        console.log('embolden, post-state: ', state.boldValue)
+        // console.log('embolden, post-state: ', state.boldValue)
     },
     bold: function bold(state, e){
         console.log('BOLD HIT, e: ', e)
-        console.log('BOLD , state: ', state)
-        state.value.set(state.boldValue)
+        // console.log('BOLD , state: ', state)
+        state.value.set(e)
     }
 };
 
@@ -45,7 +45,7 @@ function textarea(options) {
         placeholder: mercury.value(options.placeholder || ''),
         title: mercury.value(options.title || ''),
         shouldFocus: options.shouldFocus,
-        boldValue: mercury.value(options.boldValue || 'poop')
+        boldValue: mercury.value(options.boldValue || '')
     });
 
     events.input(update.input.bind(null, state));
@@ -66,8 +66,7 @@ function textareaRender(state) {
     //console shows state.value to have bold properties after click
     // console.log('textareaRender, state: ', state)
 
-    return h('div.textareaWrapper', [
-        h('.textarea', [
+    return h('.textarea', [
             h('textarea#expanding', {
                 'ev-blur': function(){
                      var textComponent = document.getElementById('expanding');
@@ -79,7 +78,6 @@ function textareaRender(state) {
                       {
                         textComponent.focus();
                         var sel = document.selection.createRange();
-                        // state.selectedText = mercury.value(sel.text);
 
                       }
                       // Mozilla version
@@ -89,16 +87,12 @@ function textareaRender(state) {
                         var endPos = textComponent.selectionEnd;
 
                       }
-                      //maybe use state.value here instead of textContent
+                      
                       var newContent = state.value.substring(0, startPos - 1) + '<strong>' +
                         state.value.substring(startPos, endPos + 1) + '</strong>' + state.value.substring(endPos);
-                      console.log('Blur event fired')
-                      //
-                      // var newContent = textContent.substring(0, startPos - 1) + '<strong>' +
-                      //   textContent.substring(startPos, endPos) + '</strong>' + textContent.substring(endPos);
+
                       events.blur(newContent)
-                      // state.boldValue.set('some shit');
-                      // state.boldValue = newContent;
+
 
                 },
                 // 'ev-blur': events.blur,
@@ -113,12 +107,6 @@ function textareaRender(state) {
             h('pre', [
                 h('span', state.value),
                 h('br')
-            ]),
-        ]),
-        h('input.bold', {
-        type: 'button',
-        value: "Bold",
-        'ev-click': events.click
-        })
+            ])
     ]);
 }

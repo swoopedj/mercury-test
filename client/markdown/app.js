@@ -70,35 +70,35 @@ function appRender(state) {
         ]),
         h('.content', [
             sideBySideMdEditor.render(state.sideBySideEditor)
-        ])
-        // h('input', {
-        //     type: 'button',
-        //     value: "Bold",
-        //     'ev-click': events.click
-            // function embolden(){
-            //     console.log('STATE: ', state)
-            //     // console.log('REGULAR: ', state.sideBySideEditor.editor.value)
-            //     // console.log('BOLD: ',state.sideBySideEditor.editor.boldValue)
-            //     // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-            //     // state.value.set(state.boldValue);
-            //     if(state.sideBySideEditor.editor.boldValue){
-            //         var temp = state.sideBySideEditor.editor.value
-            //         state.sideBySideEditor.editor.value = state.sideBySideEditor.editor.boldValue;
-            //         state.sideBySideEditor.renderer.value = state.sideBySideEditor.editor.boldValue;
-            //         // sideBySideMdEditor.render(state.sideBySideEditor)
-            //         // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
-            //         var newState = extend(state.sideBySideEditor, {value: state.sideBySideEditor.editor.boldValue})
-            //         sideBySideMdEditor(newState)
-            //         sideBySideMdEditor.render(newState)
-            //     }
-            //     else if(!state.sideBySideEditor.editor.boldValue && temp){
-            //         state.sideBySideEditor.editor.value = temp;
-            //         temp = null;
-            //     }
-                
-            //     state.sideBySideEditor.editor.boldValue = null;
+        ]),
+        h('input', {
+            type: 'button',
+            value: "Bold",
+            'ev-click': function embolden(){
+                // console.log('STATE: ', state)
 
-            // }
-        // })
+                var boldValue = state.sideBySideEditor.editor.boldValue;
+                // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
+                // state.value.set(state.boldValue);
+                // if(state.sideBySideEditor.editor.boldValue){
+                //     var temp = state.sideBySideEditor.editor.value
+                //     state.sideBySideEditor.editor.value = state.sideBySideEditor.editor.boldValue;
+                //     state.sideBySideEditor.renderer.value = state.sideBySideEditor.editor.boldValue;
+                //     // sideBySideMdEditor.render(state.sideBySideEditor)
+                //     // state.sideBySideEditor.editor.value.set(state.sideBySideEditor.editor.boldValue)
+                //     var newState = extend(state.sideBySideEditor, {value: state.sideBySideEditor.editor.boldValue})
+                //     sideBySideMdEditor(newState)
+                //     sideBySideMdEditor.render(newState)
+                // }
+                // else if(!state.sideBySideEditor.editor.boldValue && temp){
+                //     state.sideBySideEditor.editor.value = temp;
+                //     temp = null;
+                // }
+                events.click(boldValue)
+                document.getElementById('#expanding').focus()
+                // state.sideBySideEditor.editor.boldValue = null;
+
+            }
+        })
     ]);
 }
